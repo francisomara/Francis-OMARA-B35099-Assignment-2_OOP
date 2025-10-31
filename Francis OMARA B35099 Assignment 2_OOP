@@ -1,0 +1,1130 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "9e381bcb-30cb-416e-b9de-f707c31bad66",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Customer Electricity Bills:\n",
+      "Bosco: 200900 UGX\n",
+      "Sarah: 310000 UGX\n",
+      "John: 155800 UGX\n",
+      "Aisha: 328000 UGX\n",
+      "Peter: 520000 UGX\n",
+      "Maria: 221400 UGX\n",
+      "James: 330000 UGX\n",
+      "Grace: 336200 UGX\n",
+      "Paul: 290000 UGX\n",
+      "Annet: 299300 UGX\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 1.1: Electricity Billing Optimization\n",
+    "\n",
+    "# Sample data\n",
+    "customer_names = ['Bosco', 'Sarah', 'John', 'Aisha', 'Peter', 'Maria', 'James', 'Grace', 'Paul', 'Annet']\n",
+    "units_used = [245, 310, 190, 400, 520, 270, 330, 410, 290, 365]\n",
+    "connection_type = ['Domestic', 'Commercial', 'Domestic', 'Domestic', 'Commercial', 'Domestic', 'Commercial', 'Domestic', 'Commercial', 'Domestic']\n",
+    "\n",
+    "# Combine the lists\n",
+    "records = zip(customer_names, units_used, connection_type)\n",
+    "\n",
+    "# Compute bills using map() and lambda\n",
+    "bills = map(lambda x: (x[0], x[1] * (820 if x[2] == 'Domestic' else 1000)), records)\n",
+    "\n",
+    "# Display output\n",
+    "print(\"Customer Electricity Bills:\")\n",
+    "for name, total_bill in bills:\n",
+    "    print(f\"{name}: {total_bill} UGX\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "01bb3372-f85b-4ffd-be5e-c2858aca2ddd",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "High-Consumption Customers (units > 500):\n",
+      "Peter | 520 units | Commercial\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 1.2: Electricity Billing Optimization: Filtering High-Consumption Customers\n",
+    "\n",
+    "customer_names = ['Bosco', 'Sarah', 'John', 'Aisha', 'Peter', 'Maria', 'James', 'Grace', 'Paul', 'Annet']\n",
+    "units_used = [245, 310, 190, 400, 520, 270, 330, 410, 290, 365]\n",
+    "connection_type = ['Domestic', 'Commercial', 'Domestic', 'Domestic', 'Commercial', 'Domestic', 'Commercial', 'Domestic', 'Commercial', 'Domestic']\n",
+    "\n",
+    "# Combine data\n",
+    "records = zip(customer_names, units_used, connection_type)\n",
+    "\n",
+    "# Filter customers with units > 500\n",
+    "high_consumers = filter(lambda x: x[1] > 500, records)\n",
+    "\n",
+    "# Display results\n",
+    "print(\"High-Consumption Customers (units > 500):\")\n",
+    "for name, units, conn_type in high_consumers:\n",
+    "    print(f\"{name} | {units} units | {conn_type}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "32089bc9-9afe-4f86-a7d0-57556c270906",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Average Bill: 302940.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "#  Question 1.3:Function to compute the average electricity bill using *args\n",
+    "\n",
+    "def average_bill(*bills):\n",
+    "    if len(bills) == 0:\n",
+    "        return 0\n",
+    "    return sum(bills) / len(bills)\n",
+    "\n",
+    "# Example usage\n",
+    "print(\"Average Bill:\", average_bill(200900, 310000, 155800, 328000, 520000))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "c68d2456-1e94-4dfa-99ec-9465df38745a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['Bosco: UGX 200,900', 'Sarah: UGX 310,000', 'John: UGX 155,800', 'Aisha: UGX 328,000', 'Peter: UGX 520,000', 'Maria: UGX 221,400', 'James: UGX 330,000', 'Grace: UGX 336,200', 'Paul: UGX 290,000', 'Annet: UGX 299,300']\n"
+     ]
+    }
+   ],
+   "source": [
+    "#  Question 1.4:Electricity Billing Optimization with list comprehension\n",
+    "\n",
+    "customer_names = ['Bosco', 'Sarah', 'John', 'Aisha', 'Peter', 'Maria', 'James', 'Grace', 'Paul', 'Annet']\n",
+    "units_used = [245, 310, 190, 400, 520, 270, 330, 410, 290, 365]\n",
+    "connection_type = ['Domestic', 'Commercial', 'Domestic', 'Domestic', 'Commercial', 'Domestic', 'Commercial', 'Domestic', 'Commercial', 'Domestic']\n",
+    "\n",
+    "# Compute bills\n",
+    "records = zip(customer_names, units_used, connection_type)\n",
+    "bills = map(lambda x: (x[0], x[1] * (820 if x[2] == 'Domestic' else 1000)), records)\n",
+    "\n",
+    "# Display results using list comprehension\n",
+    "bill_list = [f\"{name}: UGX {bill:,}\" for name, bill in bills]\n",
+    "\n",
+    "print(bill_list)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "766b00c2-e384-44a9-9930-fb30fd9831df",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Combined Fruit Prices (Mango, Orange, Apple):\n",
+      "(2500, 3000, 4500)\n",
+      "(2700, 3200, 4600)\n",
+      "(2600, 3100, 4550)\n",
+      "(2800, 3050, 4700)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 2.1:\n",
+    "from itertools import zip_longest\n",
+    "\n",
+    "# Fruit prices from different vendors\n",
+    "mango_prices = [2500, 2700, 2600, 2800]\n",
+    "orange_prices = [3000, 3200, 3100, 3050]\n",
+    "apple_prices = [4500, 4600, 4550, 4700]\n",
+    "\n",
+    "# Combine using zip_longest (handles missing values)\n",
+    "combined_prices = list(zip_longest(mango_prices, orange_prices, apple_prices, fillvalue=0))\n",
+    "\n",
+    "# Display\n",
+    "print(\"Combined Fruit Prices (Mango, Orange, Apple):\")\n",
+    "for record in combined_prices:\n",
+    "    print(record)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "f84eb85a-c031-4eac-9da3-2f42c3ee3cca",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Average Mango Price: UGX 2650\n",
+      "Average Orange Price: UGX 3088\n",
+      "Average Apple Price: UGX 4588\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 2.2: Fruit prices from vendors\n",
+    "mango_prices = [2500, 2700, 2600, 2800]\n",
+    "orange_prices = [3000, 3200, 3100, 3050]\n",
+    "apple_prices = [4500, 4600, 4550, 4700]\n",
+    "\n",
+    "# Lambda for average\n",
+    "avg = lambda lst: sum(lst) / len(lst)\n",
+    "\n",
+    "# Compute averages\n",
+    "avg_mango = avg(mango_prices)\n",
+    "avg_orange = avg(orange_prices)\n",
+    "avg_apple = avg(apple_prices)\n",
+    "\n",
+    "# Display results\n",
+    "print(f\"Average Mango Price: UGX {avg_mango:.0f}\")\n",
+    "print(f\"Average Orange Price: UGX {avg_orange:.0f}\")\n",
+    "print(f\"Average Apple Price: UGX {avg_apple:.0f}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "b17a4689-5bb6-42e4-926b-3d0af788907e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Fruits with average price above UGX 3000:\n",
+      "Orange\n",
+      "Apple\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 2.3:Fruit prices from vendors\n",
+    "mango_prices = [2500, 2700, 2600, 2800]\n",
+    "orange_prices = [3000, 3200, 3100, 3050]\n",
+    "apple_prices = [4500, 4600, 4550, 4700]\n",
+    "\n",
+    "# Lambda for average\n",
+    "avg = lambda lst: sum(lst) / len(lst)\n",
+    "\n",
+    "# Compute average prices\n",
+    "fruit_avgs = {\n",
+    "    'Mango': avg(mango_prices),\n",
+    "    'Orange': avg(orange_prices),\n",
+    "    'Apple': avg(apple_prices)\n",
+    "}\n",
+    "\n",
+    "# Generator expression for fruits with avg price > 3000\n",
+    "high_priced_fruits = (fruit for fruit, price in fruit_avgs.items() if price > 3000)\n",
+    "\n",
+    "# Display results\n",
+    "print(\"Fruits with average price above UGX 3000:\")\n",
+    "for fruit in high_priced_fruits:\n",
+    "    print(fruit)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "c5d643b8-f115-4e41-b19b-dd07d388855e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Fruits Above Average Price: Orange, Apple\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 2.4: Lambda for average\n",
+    "avg = lambda lst: sum(lst) / len(lst)\n",
+    "\n",
+    "# Compute averages\n",
+    "fruit_avgs = {\n",
+    "    'Mango': avg(mango_prices),\n",
+    "    'Orange': avg(orange_prices),\n",
+    "    'Apple': avg(apple_prices)\n",
+    "}\n",
+    "\n",
+    "# Generator for fruits with avg price > 3000\n",
+    "high_priced_fruits = (fruit for fruit, price in fruit_avgs.items() if price > 3000)\n",
+    "\n",
+    "# Print neatly in one line\n",
+    "print(\"Fruits Above Average Price:\", \", \".join(high_priced_fruits))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "61da138a-04fb-4773-b8b5-f1e20ac0a00e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Kampala Temperatures in °F: [82.4, 86.0, 84.2, 80.6, 78.8, 84.2, 86.0, 87.8, 89.6, 86.0, 84.2, 82.4]\n",
+      "Gulu Temperatures in °F: [77.0, 78.8, 80.6, 80.6, 82.4, 84.2, 86.0, 86.0, 84.2, 80.6, 78.8, 77.0]\n",
+      "Mbarara Temperatures in °F: [71.6, 73.4, 73.4, 75.2, 77.0, 77.0, 78.8, 80.6, 80.6, 78.8, 75.2, 73.4]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 3.1: Temperature data in °C\n",
+    "kampala = [28, 30, 29, 27, 26, 29, 30, 31, 32, 30, 29, 28]\n",
+    "gulu = [25, 26, 27, 27, 28, 29, 30, 30, 29, 27, 26, 25]\n",
+    "mbarara = [22, 23, 23, 24, 25, 25, 26, 27, 27, 26, 24, 23]\n",
+    "\n",
+    "# Convert °C to °F using map() and lambda\n",
+    "kampala_f = list(map(lambda c: (c * 9/5) + 32, kampala))\n",
+    "gulu_f = list(map(lambda c: (c * 9/5) + 32, gulu))\n",
+    "mbarara_f = list(map(lambda c: (c * 9/5) + 32, mbarara))\n",
+    "\n",
+    "# Display results\n",
+    "print(\"Kampala Temperatures in °F:\", kampala_f)\n",
+    "print(\"Gulu Temperatures in °F:\", gulu_f)\n",
+    "print(\"Mbarara Temperatures in °F:\", mbarara_f)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "898d4e8d-a4f8-41c3-b219-f667eb51706b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Kampala Monthly Temperatures (°C):\n",
+      "Jan: 28°C\n",
+      "Feb: 30°C\n",
+      "Mar: 29°C\n",
+      "Apr: 27°C\n",
+      "May: 26°C\n",
+      "Jun: 29°C\n",
+      "Jul: 30°C\n",
+      "Aug: 31°C\n",
+      "Sep: 32°C\n",
+      "Oct: 30°C\n",
+      "Nov: 29°C\n",
+      "Dec: 28°C\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 3.2\n",
+    "# Data\n",
+    "kampala = [28, 30, 29, 27, 26, 29, 30, 31, 32, 30, 29, 28]\n",
+    "\n",
+    "# Months list\n",
+    "months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',\n",
+    "          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']\n",
+    "\n",
+    "# Pair using zip()\n",
+    "kampala_monthly = list(zip(months, kampala))\n",
+    "\n",
+    "# Display\n",
+    "print(\"Kampala Monthly Temperatures (°C):\")\n",
+    "for month, temp in kampala_monthly:\n",
+    "    print(f\"{month}: {temp}°C\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "2835e59f-e959-4cc7-8341-563c223422e6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Kampala months > 30°C: [('Aug', 31), ('Sep', 32)]\n",
+      "Gulu months > 30°C: []\n",
+      "Mbarara months > 30°C: []\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 3.3\n",
+    "\n",
+    "# Temperature data\n",
+    "kampala = [28, 30, 29, 27, 26, 29, 30, 31, 32, 30, 29, 28]\n",
+    "gulu = [25, 26, 27, 27, 28, 29, 30, 30, 29, 27, 26, 25]\n",
+    "mbarara = [22, 23, 23, 24, 25, 25, 26, 27, 27, 26, 24, 23]\n",
+    "\n",
+    "# Month names\n",
+    "months = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \n",
+    "          \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"]\n",
+    "\n",
+    "# Function to filter months with temp > 30\n",
+    "def high_temp(month_temp):\n",
+    "    month, temp = month_temp\n",
+    "    return temp > 30\n",
+    "\n",
+    "# Pair months with temperatures using zip()\n",
+    "kampala_months_temp = list(zip(months, kampala))\n",
+    "gulu_months_temp = list(zip(months, gulu))\n",
+    "mbarara_months_temp = list(zip(months, mbarara))\n",
+    "\n",
+    "# Apply filter\n",
+    "kampala_hot_months = list(filter(high_temp, kampala_months_temp))\n",
+    "gulu_hot_months = list(filter(high_temp, gulu_months_temp))\n",
+    "mbarara_hot_months = list(filter(high_temp, mbarara_months_temp))\n",
+    "\n",
+    "# Display results\n",
+    "print(\"Kampala months > 30°C:\", kampala_hot_months)\n",
+    "print(\"Gulu months > 30°C:\", gulu_hot_months)\n",
+    "print(\"Mbarara months > 30°C:\", mbarara_hot_months)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "7ac38834-850c-4fca-94e7-2cc599673620",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Kampala months > 30°C:\n",
+      "Aug 31\n",
+      "Sep 32\n",
+      "\n",
+      "Gulu months > 30°C:\n",
+      "\n",
+      "Mbarara months > 30°C:\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 3.4\n",
+    "\n",
+    "# Temperature data\n",
+    "kampala = [28, 30, 29, 27, 26, 29, 30, 31, 32, 30, 29, 28]\n",
+    "gulu = [25, 26, 27, 27, 28, 29, 30, 30, 29, 27, 26, 25]\n",
+    "mbarara = [22, 23, 23, 24, 25, 25, 26, 27, 27, 26, 24, 23]\n",
+    "\n",
+    "# Month names\n",
+    "months = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \n",
+    "          \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"]\n",
+    "\n",
+    "# Generator function\n",
+    "def high_temp_generator(months, temps, threshold=30):\n",
+    "    for month, temp in zip(months, temps):\n",
+    "        if temp > threshold:\n",
+    "            yield month, temp\n",
+    "\n",
+    "# Using the generator\n",
+    "print(\"Kampala months > 30°C:\")\n",
+    "for month, temp in high_temp_generator(months, kampala):\n",
+    "    print(month, temp)\n",
+    "\n",
+    "print(\"\\nGulu months > 30°C:\")\n",
+    "for month, temp in high_temp_generator(months, gulu):\n",
+    "    print(month, temp)\n",
+    "\n",
+    "print(\"\\nMbarara months > 30°C:\")\n",
+    "for month, temp in high_temp_generator(months, mbarara):\n",
+    "    print(month, temp)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "6910db27-87fd-4918-a18b-7759d5798e16",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Hot months in Kampala: Aug - 31°C, Sep - 32°C\n",
+      "No months in Gulu exceed 30°C.\n",
+      "No months in Mbarara exceed 30°C.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 3.5\n",
+    "\n",
+    "# Temperature data\n",
+    "kampala = [28, 30, 29, 27, 26, 29, 30, 31, 32, 30, 29, 28]\n",
+    "gulu = [25, 26, 27, 27, 28, 29, 30, 30, 29, 27, 26, 25]\n",
+    "mbarara = [22, 23, 23, 24, 25, 25, 26, 27, 27, 26, 24, 23]\n",
+    "\n",
+    "# Month names\n",
+    "months = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \n",
+    "          \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"]\n",
+    "\n",
+    "# Generator function\n",
+    "def high_temp_generator(months, temps, threshold=30):\n",
+    "    for month, temp in zip(months, temps):\n",
+    "        if temp > threshold:\n",
+    "            yield month, temp\n",
+    "\n",
+    "# Function to print formatted output\n",
+    "def print_hot_months(district_name, months, temps, threshold=30):\n",
+    "    hot_months = [f\"{month} - {temp}°C\" for month, temp in high_temp_generator(months, temps, threshold)]\n",
+    "    if hot_months:\n",
+    "        print(f\"Hot months in {district_name}: {', '.join(hot_months)}\")\n",
+    "    else:\n",
+    "        print(f\"No months in {district_name} exceed {threshold}°C.\")\n",
+    "\n",
+    "# Print for each district\n",
+    "print_hot_months(\"Kampala\", months, kampala)\n",
+    "print_hot_months(\"Gulu\", months, gulu)\n",
+    "print_hot_months(\"Mbarara\", months, mbarara)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "39d8d850-bbc4-44e7-8b63-263c5a0b1ef0",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Alex paid a total of 600000 UGX\n",
+      "Grace paid a total of 700000 UGX\n",
+      "Sarah paid a total of 900000 UGX\n",
+      "Brian paid a total of 500000 UGX\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 4.1: \n",
+    "# Data\n",
+    "students = ['Alex', 'Grace', 'Sarah', 'Brian']\n",
+    "installments = [\n",
+    "    [150000, 200000, 250000],\n",
+    "    [500000, 0, 200000],\n",
+    "    [300000, 300000, 300000],\n",
+    "    [400000, 100000, 0]\n",
+    "]\n",
+    "\n",
+    "# Lambda function to sum non-zero payments\n",
+    "sum_valid_payments = lambda payments: sum(payment for payment in payments if payment != 0)\n",
+    "\n",
+    "# Apply the lambda to each student\n",
+    "total_paid = [sum_valid_payments(p) for p in installments]\n",
+    "\n",
+    "# Display results\n",
+    "for student, total in zip(students, total_paid):\n",
+    "    print(f\"{student} paid a total of {total} UGX\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "ee43bd2d-4920-4982-8afc-5c03a1fa5d05",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Alex paid a total of 600000 UGX\n",
+      "Grace paid a total of 700000 UGX\n",
+      "Sarah paid a total of 900000 UGX\n",
+      "Brian paid a total of 500000 UGX\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 4.2:\n",
+    "\n",
+    "# Data\n",
+    "students = ['Alex', 'Grace', 'Sarah', 'Brian']\n",
+    "installments = [\n",
+    "    [150000, 200000, 250000],\n",
+    "    [500000, 0, 200000],\n",
+    "    [300000, 300000, 300000],\n",
+    "    [400000, 100000, 0]\n",
+    "]\n",
+    "\n",
+    "# Lambda function to sum non-zero payments\n",
+    "sum_valid_payments = lambda payments: sum(p for p in payments if p != 0)\n",
+    "\n",
+    "# Use map() to compute total paid by each student\n",
+    "total_paid = list(map(sum_valid_payments, installments))\n",
+    "\n",
+    "# Display results\n",
+    "for student, total in zip(students, total_paid):\n",
+    "    print(f\"{student} paid a total of {total} UGX\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "a7f90ef0-b196-497c-be2e-8808e46128de",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Alex paid a total of 600000 UGX\n",
+      "Grace paid a total of 700000 UGX\n",
+      "Sarah paid a total of 900000 UGX\n",
+      "Brian paid a total of 500000 UGX\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 4.3:\n",
+    "\n",
+    "# Data\n",
+    "students = ['Alex', 'Grace', 'Sarah', 'Brian']\n",
+    "installments = [\n",
+    "    [150000, 200000, 250000],\n",
+    "    [500000, 0, 200000],\n",
+    "    [300000, 300000, 300000],\n",
+    "    [400000, 100000, 0]\n",
+    "]\n",
+    "\n",
+    "# Lambda to sum non-zero payments\n",
+    "sum_valid_payments = lambda payments: sum(p for p in payments if p != 0)\n",
+    "\n",
+    "# Compute totals using map()\n",
+    "total_paid = list(map(sum_valid_payments, installments))\n",
+    "\n",
+    "# Combine student names and totals using zip()\n",
+    "student_totals = list(zip(students, total_paid))\n",
+    "\n",
+    "# Display results\n",
+    "for student, total in student_totals:\n",
+    "    print(f\"{student} paid a total of {total} UGX\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "c4de7c3d-f4ff-444e-9c7e-5c342ac162cd",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Students who have cleared full fees:\n",
+      "Alex paid 600000 UGX\n",
+      "Grace paid 700000 UGX\n",
+      "Sarah paid 900000 UGX\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 4.4:\n",
+    "\n",
+    "# Data\n",
+    "students = ['Alex', 'Grace', 'Sarah', 'Brian']\n",
+    "installments = [\n",
+    "    [150000, 200000, 250000],\n",
+    "    [500000, 0, 200000],\n",
+    "    [300000, 300000, 300000],\n",
+    "    [400000, 100000, 0]\n",
+    "]\n",
+    "\n",
+    "# Lambda to sum non-zero payments\n",
+    "sum_valid_payments = lambda payments: sum(p for p in payments if p != 0)\n",
+    "\n",
+    "# Compute total paid per student\n",
+    "total_paid = list(map(sum_valid_payments, installments))\n",
+    "\n",
+    "# Combine students and totals\n",
+    "student_totals = list(zip(students, total_paid))\n",
+    "\n",
+    "# Filter students who cleared full fees (≥ 600000)\n",
+    "full_fee_students = list(filter(lambda x: x[1] >= 600000, student_totals))\n",
+    "\n",
+    "# Display results\n",
+    "print(\"Students who have cleared full fees:\")\n",
+    "for student, total in full_fee_students:\n",
+    "    print(f\"{student} paid {total} UGX\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "e8b0849a-7cc2-4f0e-86c0-93b3ad19ba6c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "School Fees Payment Summary:\n",
+      "----------------------------------------\n",
+      "Alex: 600000 UGX (Cleared full fees)\n",
+      "Grace: 700000 UGX (Cleared full fees)\n",
+      "Sarah: 900000 UGX (Cleared full fees)\n",
+      "Brian: 500000 UGX (Pending fees)\n",
+      "----------------------------------------\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 4.5:\n",
+    "\n",
+    "def payment_summary(**kwargs):\n",
+    "    print(\"School Fees Payment Summary:\")\n",
+    "    print(\"-\" * 40)\n",
+    "    for student, total in kwargs.items():\n",
+    "        status = \"Cleared full fees\" if total >= 600000 else \"Pending fees\"\n",
+    "        print(f\"{student}: {total} UGX ({status})\")\n",
+    "    print(\"-\" * 40)\n",
+    "\n",
+    "# Example usage\n",
+    "payment_summary(Alex=600000, Grace=700000, Sarah=900000, Brian=500000)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "33218b57-7ec1-4b8f-a96f-c5f075ddbd6c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Bushenyi: 1.2 tons\n",
+      "Mityana: 1.5 tons\n",
+      "Kasese: 0.9 tons\n",
+      "Mbale: 1.3 tons\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 5.1\n",
+    "\n",
+    "# Data\n",
+    "districts = ['Bushenyi', 'Mityana', 'Kasese', 'Mbale']\n",
+    "yield_data = [1200, 1500, 900, 1300]  # in kg\n",
+    "\n",
+    "# Lambda function to convert kg to tons\n",
+    "kg_to_ton = lambda kg: kg / 1000\n",
+    "\n",
+    "# List comprehension to convert all yields\n",
+    "yield_in_tons = [kg_to_ton(y) for y in yield_data]\n",
+    "\n",
+    "# Display results\n",
+    "for district, y in zip(districts, yield_in_tons):\n",
+    "    print(f\"{district}: {y} tons\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "bd91ccc2-a812-4c05-9d99-4891015a64a8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Districts with yield > 1 ton:\n",
+      "Bushenyi: 1.2 tons\n",
+      "Mityana: 1.5 tons\n",
+      "Mbale: 1.3 tons\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 5.2:\n",
+    "\n",
+    "# Data\n",
+    "districts = ['Bushenyi', 'Mityana', 'Kasese', 'Mbale']\n",
+    "yield_data = [1200, 1500, 900, 1300]  # in kg\n",
+    "\n",
+    "# Lambda to convert kg to tons\n",
+    "kg_to_ton = lambda kg: kg / 1000\n",
+    "\n",
+    "# Generator function to yield districts with yield > 1 ton\n",
+    "def high_yield_districts(districts, yields, threshold=1):\n",
+    "    for district, y in zip(districts, yields):\n",
+    "        if kg_to_ton(y) > threshold:\n",
+    "            yield district, kg_to_ton(y)\n",
+    "\n",
+    "# Using the generator\n",
+    "print(\"Districts with yield > 1 ton:\")\n",
+    "for district, y in high_yield_districts(districts, yield_data):\n",
+    "    print(f\"{district}: {y} tons\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "02ecfb0f-4ad8-49a2-be62-99cee9a9f897",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Average yield across all districts: 1225.0 kg (1.23 tons)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 5.3:\n",
+    "\n",
+    "# Data\n",
+    "yield_data = [1200, 1500, 900, 1300]  # in kg\n",
+    "\n",
+    "# Function to compute average yield\n",
+    "def average_yield(*args):\n",
+    "    total = sum(args)\n",
+    "    count = len(args)\n",
+    "    avg = total / count\n",
+    "    return avg\n",
+    "\n",
+    "# Compute average\n",
+    "avg_yield_kg = average_yield(*yield_data)\n",
+    "avg_yield_ton = avg_yield_kg / 1000  # convert to tons\n",
+    "\n",
+    "print(f\"Average yield across all districts: {avg_yield_kg} kg ({avg_yield_ton:.2f} tons)\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "eaa4e8dc-1a08-4e20-9762-d1b32b5efa93",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "District Revenue Summary:\n",
+      "----------------------------------------\n",
+      "Bushenyi: 1.2 tons × 2000 UGX = 2400.00 UGX\n",
+      "Mityana: 1.5 tons × 2500 UGX = 3750.00 UGX\n",
+      "Kasese: 0.9 tons × 1800 UGX = 1620.00 UGX\n",
+      "Mbale: 1.3 tons × 2200 UGX = 2860.00 UGX\n",
+      "----------------------------------------\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 5.4:\n",
+    "\n",
+    "# Data\n",
+    "districts = ['Bushenyi', 'Mityana', 'Kasese', 'Mbale']\n",
+    "yield_data = [1200, 1500, 900, 1300]  # in kg\n",
+    "\n",
+    "# Lambda to convert kg to tons\n",
+    "kg_to_ton = lambda kg: kg / 1000\n",
+    "\n",
+    "# Function to compute revenue per district using **kwargs for prices\n",
+    "def compute_revenue(yields, **prices):\n",
+    "    print(\"District Revenue Summary:\")\n",
+    "    print(\"-\" * 40)\n",
+    "    for district, y in zip(districts, yields):\n",
+    "        if district in prices:\n",
+    "            revenue = kg_to_ton(y) * prices[district]\n",
+    "            print(f\"{district}: {kg_to_ton(y)} tons × {prices[district]} UGX = {revenue:.2f} UGX\")\n",
+    "        else:\n",
+    "            print(f\"{district}: Price not provided\")\n",
+    "    print(\"-\" * 40)\n",
+    "\n",
+    "# Example usage: passing prices per district\n",
+    "compute_revenue(\n",
+    "    yield_data,\n",
+    "    Bushenyi=2000,\n",
+    "    Mityana=2500,\n",
+    "    Kasese=1800,\n",
+    "    Mbale=2200\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "c54622e1-b628-4213-9579-5c16b83a334f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Bushenyi produced 1.2 tons — Revenue: UGX 2,400,000\n",
+      "Mityana produced 1.5 tons — Revenue: UGX 3,750,000\n",
+      "Kasese produced 0.9 tons — Revenue: UGX 4,500,000\n",
+      "Mbale produced 1.3 tons — Revenue: UGX 2,860,000\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 5.5:\n",
+    "\n",
+    "# Data\n",
+    "districts = ['Bushenyi', 'Mityana', 'Kasese', 'Mbale']\n",
+    "yield_data = [1200, 1500, 900, 1300]  # in kg\n",
+    "\n",
+    "# Lambda to convert kg to tons\n",
+    "kg_to_ton = lambda kg: kg / 1000\n",
+    "\n",
+    "# Function to compute and print revenue in formatted style\n",
+    "def compute_revenue_formatted(yields, **prices):\n",
+    "    for district, y in zip(districts, yields):\n",
+    "        if district in prices:\n",
+    "            tons = kg_to_ton(y)\n",
+    "            revenue = tons * prices[district]\n",
+    "            print(f\"{district} produced {tons:.1f} tons — Revenue: UGX {revenue:,.0f}\")\n",
+    "        else:\n",
+    "            print(f\"{district}: Price not provided\")\n",
+    "\n",
+    "# Example usage: passing prices per district\n",
+    "compute_revenue_formatted(\n",
+    "    yield_data,\n",
+    "    Bushenyi=2000000,\n",
+    "    Mityana=2500000,\n",
+    "    Kasese=5000000,\n",
+    "    Mbale=2200000\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "e986b638-bc2f-416c-8491-1a51c196456f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "https://ucu.ac.ug: 200\n",
+      "https://harba.ug: 200\n",
+      "https://www.bou.or.ug: 503\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 6.1: \n",
+    "\n",
+    "import requests\n",
+    "\n",
+    "# Function to get response codes for multiple URLs\n",
+    "def get_response_codes(*urls):\n",
+    "    response_codes = {}\n",
+    "    for url in urls:\n",
+    "        try:\n",
+    "            response = requests.get(url)\n",
+    "            response_codes[url] = response.status_code\n",
+    "        except requests.exceptions.RequestException as e:\n",
+    "            response_codes[url] = f\"Error: {e}\"\n",
+    "    return response_codes\n",
+    "\n",
+    "# Example usage\n",
+    "sites = ['https://ucu.ac.ug', 'https://harba.ug', 'https://www.bou.or.ug']\n",
+    "codes = get_response_codes(*sites)\n",
+    "\n",
+    "# Print results\n",
+    "for site, code in codes.items():\n",
+    "    print(f\"{site}: {code}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "0f3f8e3e-0eb6-41c8-bd67-6c808d4052be",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "URLs with status code 200:\n",
+      "https://ucu.ac.ug\n",
+      "https://harba.ug\n"
+     ]
+    }
+   ],
+   "source": [
+    "import requests\n",
+    "\n",
+    "# Question 6.2:\n",
+    "\n",
+    "# Function to get response codes\n",
+    "def get_response_codes(*urls):\n",
+    "    response_codes = {}\n",
+    "    for url in urls:\n",
+    "        try:\n",
+    "            response = requests.get(url)\n",
+    "            response_codes[url] = response.status_code\n",
+    "        except requests.exceptions.RequestException as e:\n",
+    "            response_codes[url] = None  # treat errors as None\n",
+    "    return response_codes\n",
+    "\n",
+    "# List of sites\n",
+    "sites = ['https://ucu.ac.ug', 'https://harba.ug', 'https://www.bou.or.ug']\n",
+    "\n",
+    "# Get response codes\n",
+    "codes = get_response_codes(*sites)\n",
+    "\n",
+    "# List comprehension to get only URLs with status code 200\n",
+    "ok_urls = [url for url, code in codes.items() if code == 200]\n",
+    "\n",
+    "# Print results\n",
+    "print(\"URLs with status code 200:\")\n",
+    "for url in ok_urls:\n",
+    "    print(url)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "1ebfbf23-4226-4cf7-855f-97a4fa10c5e6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "URLs with status code 200:\n",
+      "https://ucu.ac.ug: 200\n",
+      "https://harba.ug: 200\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 6.3:\n",
+    "\n",
+    "import requests\n",
+    "\n",
+    "# Function to get response codes\n",
+    "def get_response_codes(*urls):\n",
+    "    response_codes = {}\n",
+    "    for url in urls:\n",
+    "        try:\n",
+    "            response = requests.get(url)\n",
+    "            response_codes[url] = response.status_code\n",
+    "        except requests.exceptions.RequestException:\n",
+    "            response_codes[url] = None  # treat errors as None\n",
+    "    return response_codes\n",
+    "\n",
+    "# List of sites\n",
+    "sites = ['https://ucu.ac.ug', 'https://harba.ug', 'https://www.bou.or.ug']\n",
+    "\n",
+    "# Get response codes\n",
+    "codes = get_response_codes(*sites)\n",
+    "\n",
+    "# Dictionary comprehension to store only URLs with status code 200\n",
+    "ok_urls_dict = {url: code for url, code in codes.items() if code == 200}\n",
+    "\n",
+    "# Print results\n",
+    "print(\"URLs with status code 200:\")\n",
+    "for url, code in ok_urls_dict.items():\n",
+    "    print(f\"{url}: {code}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "0ebd17d9-9bce-4dc1-9dfd-74d6e69c602f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Active Site: https://ucu.ac.ug\n",
+      "Active Site: https://harba.ug\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Question 6.4\n",
+    "\n",
+    "import requests\n",
+    "\n",
+    "# Function to get response codes\n",
+    "def get_response_codes(*urls):\n",
+    "    response_codes = {}\n",
+    "    for url in urls:\n",
+    "        try:\n",
+    "            response = requests.get(url)\n",
+    "            response_codes[url] = response.status_code\n",
+    "        except requests.exceptions.RequestException:\n",
+    "            response_codes[url] = None\n",
+    "    return response_codes\n",
+    "\n",
+    "# List of sites\n",
+    "sites = ['https://ucu.ac.ug', 'https://harba.ug', 'https://www.bou.or.ug']\n",
+    "\n",
+    "# Get response codes\n",
+    "codes = get_response_codes(*sites)\n",
+    "\n",
+    "# Generator expression for active sites\n",
+    "active_sites = (f\"Active Site: {url}\" for url, code in codes.items() if code == 200)\n",
+    "\n",
+    "# Iterate over generator and print\n",
+    "for site in active_sites:\n",
+    "    print(site)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9549444f-708e-498c-be7c-433580e162cb",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
